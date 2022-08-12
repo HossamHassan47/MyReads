@@ -5,8 +5,6 @@ import BooksPage from "./pages/BooksPage";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
-
   return (
     <div className="app">
       <Routes>

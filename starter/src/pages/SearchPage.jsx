@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import BooksGrid from "../components/BooksGrid";
 
 const SearchPage = (props) => {
   return (
@@ -15,7 +16,7 @@ const SearchPage = (props) => {
         </div>
       </div>
       <div className="search-books-results">
-        <ol className="books-grid"></ol>
+        <BooksGrid />
       </div>
     </div>
   );
