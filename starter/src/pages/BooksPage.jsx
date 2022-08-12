@@ -22,6 +22,14 @@ const BooksPage = (props) => {
     loadAllBooks();
   }, []);
 
+  const handleOnShelfChange = (book, shelf) => {
+    const result = BooksAPI.update(book, shelf);
+
+    setAllBooks(
+      allBooks.map((b) => (b.id === book.id ? { ...b, shelf: shelf } : b))
+    );
+  };
+
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -34,6 +42,7 @@ const BooksPage = (props) => {
               key={c.id}
               title={c.title}
               books={allBooks.filter((b) => b.shelf === c.id)}
+              onShelfChange={handleOnShelfChange}
             />
           ))}
         </div>

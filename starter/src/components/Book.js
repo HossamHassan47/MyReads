@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Book = ({ book }) => {
+const Book = ({ book, onShelfChange }) => {
+  const handleOnChange = (e) => {
+    onShelfChange(book, e.target.value);
+  };
   return (
     <div className="book">
       <div className="book-top">
@@ -14,7 +17,7 @@ const Book = ({ book }) => {
           }}
         ></div>
         <div className="book-shelf-changer">
-          <select value={book.shelf}>
+          <select value={book.shelf} onChange={handleOnChange}>
             <option value="none" disabled>
               Move to...
             </option>
