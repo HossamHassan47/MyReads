@@ -5,18 +5,25 @@ import BooksGrid from "../components/BooksGrid";
 import * as BooksAPI from "../BooksAPI";
 
 const SearchPage = (props) => {
-  const [query, setQuery] = useState("");
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
+  const handleSearch = (query) => {
     const searchBooks = async () => {
-      const result = await BooksAPI.search(query);
-      setBooks(result);
+      const result = await BooksAPI.search(query.trim().replace(".", ""));
+      if (Array.isArray(result)) {
+        setBooks(result);
+      } else {
+        setBooks([]);
+      }
       console.log(result);
     };
 
-    searchBooks();
-  }, [query]);
+    if (query.length > 0) {
+      searchBooks();
+    } else {
+      setBooks([]);
+    }
+  };
 
   return (
     <div className="search-books">
@@ -28,16 +35,15 @@ const SearchPage = (props) => {
         <div className="search-books-input-wrapper">
           <input
             type="text"
-            value={query}
             onChange={(e) => {
-              setQuery(e.target.value);
+              handleSearch(e.target.value);
             }}
             placeholder="Search by title, author, or ISBN"
           />
         </div>
       </div>
       <div className="search-books-results">
-        <BooksGrid books={[]} />
+        <BooksGrid books={books} />
       </div>
     </div>
   );
