@@ -1,35 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import BookShelf from "../components/BookShelf";
-import * as BooksAPI from "../BooksAPI";
 
-const BooksPage = (props) => {
-  const categories = [
-    { id: "currentlyReading", title: "Currently Reading" },
-    { id: "wantToRead", title: "Want To Read" },
-    { id: "read", title: "Read" },
-  ];
-
-  const [allBooks, setAllBooks] = useState([]);
-
-  useEffect(() => {
-    const loadAllBooks = async () => {
-      const result = await BooksAPI.getAll();
-      setAllBooks(result);
-      console.log(result);
-    };
-    loadAllBooks();
-  }, []);
-
-  const handleOnShelfChange = (book, shelf) => {
-    const result = BooksAPI.update(book, shelf);
-
-    setAllBooks(
-      allBooks.map((b) => (b.id === book.id ? { ...b, shelf: shelf } : b))
-    );
-  };
-
+const BooksPage = ({ categories, books, onShelfChange }) => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -41,8 +15,8 @@ const BooksPage = (props) => {
             <BookShelf
               key={c.id}
               title={c.title}
-              books={allBooks.filter((b) => b.shelf === c.id)}
-              onShelfChange={handleOnShelfChange}
+              books={books.filter((b) => b.shelf === c.id)}
+              onShelfChange={onShelfChange}
             />
           ))}
         </div>

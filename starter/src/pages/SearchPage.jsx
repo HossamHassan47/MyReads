@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import BooksGrid from "../components/BooksGrid";
 import * as BooksAPI from "../BooksAPI";
 
-const SearchPage = (props) => {
-  const [books, setBooks] = useState([]);
+const SearchPage = ({ books, onShelfChange }) => {
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleSearch = (query) => {
     const searchBooks = async () => {
       const result = await BooksAPI.search(query.trim().replace(".", ""));
       if (Array.isArray(result)) {
-        setBooks(result);
+        setSearchResult(result);
       } else {
-        setBooks([]);
+        setSearchResult([]);
       }
       console.log(result);
     };
@@ -21,7 +21,7 @@ const SearchPage = (props) => {
     if (query.length > 0) {
       searchBooks();
     } else {
-      setBooks([]);
+      setSearchResult([]);
     }
   };
 
@@ -43,7 +43,7 @@ const SearchPage = (props) => {
         </div>
       </div>
       <div className="search-books-results">
-        <BooksGrid books={books} />
+        <BooksGrid books={searchResult} onShelfChange={onShelfChange} />
       </div>
     </div>
   );

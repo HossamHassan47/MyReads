@@ -14,7 +14,7 @@ const Book = ({ book, onShelfChange }) => {
             width: 128,
             height: 193,
             backgroundImage:
-              book.imageLinks != undefined
+              book.imageLinks !== undefined
                 ? `url("${book.imageLinks.smallThumbnail}")`
                 : "",
           }}
