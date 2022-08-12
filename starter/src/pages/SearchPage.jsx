@@ -11,11 +11,17 @@ const SearchPage = ({ books, onShelfChange }) => {
     const searchBooks = async () => {
       const result = await BooksAPI.search(query.trim().replace(".", ""));
       if (Array.isArray(result)) {
+        // Set shelf
+        result.forEach((book) => {
+          const currentBook = books.find((b) => b.id === book.id);
+
+          book.shelf = currentBook === undefined ? "none" : currentBook.shelf;
+        });
         setSearchResult(result);
       } else {
         setSearchResult([]);
       }
-      console.log(result);
+      //console.log(result);
     };
 
     if (query.length > 0) {

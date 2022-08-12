@@ -15,20 +15,19 @@ function App() {
   const [myBooks, setMyBooks] = useState([]);
 
   useEffect(() => {
-    const getMyBooks = async () => {
-      const result = await BooksAPI.getAll();
-      setMyBooks(result);
-      console.log(result);
-    };
     getMyBooks();
   }, []);
 
-  const handleOnShelfChange = (book, shelf) => {
-    BooksAPI.update(book, shelf);
+  const getMyBooks = async () => {
+    const result = await BooksAPI.getAll();
+    setMyBooks(result);
+    //console.log(result);
+  };
 
-    setMyBooks(
-      myBooks.map((b) => (b.id === book.id ? { ...b, shelf: shelf } : b))
-    );
+  const handleOnShelfChange = async (book, shelf) => {
+    const result = await BooksAPI.update(book, shelf);
+
+    getMyBooks();
   };
 
   return (
